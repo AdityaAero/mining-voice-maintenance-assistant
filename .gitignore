@@ -1,0 +1,25 @@
+# Python environment and caches
+.venv/
+__pycache__/
+*.pyc
+
+# Speech models: several GB, downloaded and converted by download_model.py
+models/
+
+# Private, local-only data: records, recordings, Excel output, logs and your own fleet list
+data/*.db
+data/*.db-*
+data/audio/
+data/*.xlsx
+data/~tmp_*
+data/*.log
+data/machines.csv
+*.log
+*_log.txt
+
+# Test artefacts (the sample clips are regenerated with tests/make_samples.py)
+tests/screenshots/
+tests/samples/*.wav
+
+# Helper tied to private database extracts (not part of the app)
+tools/build_catalogs.py

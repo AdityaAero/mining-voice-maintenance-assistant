@@ -1,0 +1,16 @@
+# Workshop terms given to Whisper as context when the app is used in English (one term per line).
+# Keep the list short and real: invented terms can bias the transcription.
+CAT 994K wheel loader
+hour meter
+lift cylinder
+tilt cylinder
+torque converter
+impeller clutch
+transmission
+final drive
+differential
+Duo-Cone seal
+bucket teeth and adapters
+VIMS
+autolube
+top-up

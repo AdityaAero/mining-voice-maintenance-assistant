@@ -1,0 +1,89 @@
+[
+  {
+    "id": "s01",
+    "audio": "s01.wav",
+    "voice": "es-CL-CatalinaNeural",
+    "subsystem": "hidraulico",
+    "field": "hallazgo",
+    "text": "Fuga de aceite en la manguera de levante, lado izquierdo.",
+    "critical_terms": [
+      "fuga",
+      "manguera de levante",
+      "izquierdo"
+    ]
+  },
+  {
+    "id": "s02",
+    "audio": "s02.wav",
+    "voice": "es-CL-LorenzoNeural",
+    "subsystem": "frenos",
+    "field": "hallazgo",
+    "text": "Frenos sin novedades.",
+    "critical_terms": [
+      "sin novedades"
+    ]
+  },
+  {
+    "id": "s03",
+    "audio": "s03.wav",
+    "voice": "es-CL-LorenzoNeural",
+    "subsystem": "hidraulico",
+    "field": "accion",
+    "text": "No se cambió la manguera, queda pendiente para la próxima mantención.",
+    "critical_terms": [
+      "no se cambió",
+      "pendiente"
+    ]
+  },
+  {
+    "id": "s04",
+    "audio": "s04.wav",
+    "voice": "es-CL-CatalinaNeural",
+    "subsystem": "transmision",
+    "field": "hallazgo",
+    "text": "Temperatura del aceite de transmisión de ochenta y dos grados, presión de quince bar.",
+    "critical_terms": [
+      "transmisión",
+      "82",
+      "15",
+      "bar"
+    ]
+  },
+  {
+    "id": "s05",
+    "audio": "s05.wav",
+    "voice": "es-CL-LorenzoNeural",
+    "subsystem": "balde",
+    "field": "hallazgo",
+    "text": "Diente número tres del balde quebrado y adaptador con desgaste.",
+    "critical_terms": [
+      "diente",
+      "tres",
+      "quebrado",
+      "adaptador"
+    ]
+  },
+  {
+    "id": "s06",
+    "audio": "s06.wav",
+    "voice": "es-CL-CatalinaNeural",
+    "subsystem": "convertidor",
+    "field": "accion",
+    "text": "Se reemplazó el filtro de aceite del convertidor de par y se rellenaron doce litros.",
+    "critical_terms": [
+      "filtro",
+      "convertidor de par",
+      "12",
+      "litros"
+    ]
+  },
+  {
+    "id": "s07_noise",
+    "audio": "s07_noise.wav",
+    "voice": null,
+    "subsystem": "motor",
+    "field": "hallazgo",
+    "text": "",
+    "critical_terms": []
+  }
+]

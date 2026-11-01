@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro de mantención por voz</title>
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="/static/icon.svg" alt="" width="30" height="30">
+      <span data-i18n="app_title">Registro de mantención por voz</span>
+    </div>
+    <div class="chips">
+      <span class="chip" id="chip-model"><i class="dot"></i><span data-i18n="chip_model_loading"></span></span>
+      <button class="chip" id="chip-mic" type="button"><i class="dot"></i><span data-i18n="chip_mic"></span></button>
+      <button class="chip" id="chip-excel" type="button"><i class="dot"></i><span>Excel</span></button>
+      <span class="chip" id="chip-sap"></span>
+      <div class="lang" role="radiogroup" aria-label="Idioma / Language">
+        <button type="button" role="radio" data-lang="es">ES</button><button type="button" role="radio" data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" class="tab active" data-view="view-record" aria-selected="true" data-i18n="tab_new"></button>
+    <button role="tab" class="tab" data-view="view-history" aria-selected="false" data-i18n="tab_history"></button>
+  </nav>
+
+  <main>
+    <!-- ================= New record ================= -->
+    <section id="view-record" class="view">
+     <div id="record-form">
+      <!-- dictation engine: local Whisper or Wispr Flow -->
+      <div class="dictbar" id="dictbar">
+        <span class="dictbar-label" data-i18n="dict_with"></span>
+        <div class="engine" role="radiogroup">
+          <button type="button" role="radio" data-engine="whisper">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mic"/></svg>
+            <span><b>Whisper</b><small data-i18n="eng_whisper_sub"></small></span>
+          </button>
+          <button type="button" role="radio" data-engine="wispr">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wave"/></svg>
+            <span><b>Wispr Flow</b><small id="wispr-sub"></small></span>
+          </button>
+        </div>
+        <p class="dictbar-help" id="dict-help"></p>
+      </div>
+
+      <div class="banner" id="banner" hidden></div>
+
+      <!-- What is being recorded -->
+      <section class="card" id="card-que">
+        <h2><span class="step"></span><span data-i18n="h_que"></span></h2>
+        <div class="tiles" id="f-actividad" role="radiogroup"></div>
+      </section>
+
+      <!-- Machine, technician, date, hour meter -->
+      <section class="card" id="card-equipo">
+        <h2><span class="step"></span><span data-i18n="h_equipo"></span></h2>
+        <div class="grid3 head">
+          <label class="fld"><span data-i18n="f_equipo"></span>
+            <select id="f-equipo"></select>
+            <small id="equipo-info" class="help"></small>
+          </label>
+          <label class="fld"><span data-i18n="f_fecha"></span>
+            <span class="inline">
+              <input id="f-fecha" type="datetime-local">
+              <button type="button" class="small" id="btn-ahora" data-i18n="btn_ahora"></button>
+            </span>
+          </label>
+          <div class="vfield" data-field="horometro" data-kind="number" data-label-key="f_horometro">
+            <label for="f-horometro" data-i18n="f_horometro"></label>
+            <div class="vrow"><input id="f-horometro" inputmode="decimal" autocomplete="off" data-i18n-ph="ph_horometro"></div>
+            <small id="horometro-info" class="help"></small>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="vfield" data-field="tecnico" data-label-key="f_tecnico">
+            <label for="f-tecnico" data-i18n="f_tecnico"></label>
+            <div class="vrow"><input id="f-tecnico" list="tecnicos" autocomplete="off" data-i18n-ph="ph_tecnico"><datalist id="tecnicos"></datalist></div>
+          </div>
+          <div class="fld"><span data-i18n="f_turno"></span>
+            <div class="seg" id="f-turno" role="radiogroup"></div>
+          </div>
+        </div>
+      </section>
+
+      <p class="pick-first" id="pick-first" data-i18n="pick_first"></p>
+
+      <!-- Daily inspection checklist (CAT 994K) -->
+      <section class="card" id="card-lista" hidden>
+        <div class="row-between lista-head">
+          <h2><span class="step"></span><span id="lista-title"></span></h2>
+          <div class="progress" id="lista-progress"><div class="bar"><i></i></div><span class="count"></span></div>
+        </div>
+        <p class="help" data-i18n-html="lista_help"></p>
+        <div id="checklist"></div>
+      </section>
+
+      <!-- Work order (maintenance) -->
+      <section class="card" id="card-orden" hidden>
+        <h2><span class="step"></span><span data-i18n="h_orden"></span></h2>
+        <div class="grid3 order">
+          <label class="fld"><span><span data-i18n="f_clase"></span> <small data-i18n="opcional"></small></span>
+            <select id="f-clase"></select>
+          </label>
+          <div class="vfield" data-field="orden_trabajo" data-kind="digits" data-label-key="f_ot">
+            <label for="f-ot"><span data-i18n="f_ot"></span> <small data-i18n="opcional"></small></label>
+            <div class="vrow"><input id="f-ot" inputmode="numeric" autocomplete="off" data-i18n-ph="ph_ot"></div>
+          </div>
+          <div class="vfield" data-field="aviso" data-kind="digits" data-label-key="f_aviso">
+            <label for="f-aviso"><span data-i18n="f_aviso"></span> <small data-i18n="opcional"></small></label>
+            <div class="vrow"><input id="f-aviso" inputmode="numeric" autocomplete="off" data-i18n-ph="ph_aviso"></div>
+          </div>
+        </div>
+        <div class="vfield" data-field="descripcion_trabajo" data-label-key="f_desc">
+          <label for="f-desc" data-i18n="f_desc"></label>
+          <div class="vrow"><textarea id="f-desc" rows="2" data-i18n-ph="ph_desc"></textarea></div>
+        </div>
+      </section>
+
+      <!-- Compartment lines (maintenance) -->
+      <section class="card" id="card-detalle" hidden>
+        <div class="row-between">
+          <h2><span class="step"></span><span data-i18n="h_detalle"></span></h2>
+          <div class="actions">
+            <button type="button" id="btn-add-line" data-i18n="btn_add_line"></button>
+            <button type="button" id="btn-add-all" data-i18n="btn_add_all"></button>
+          </div>
+        </div>
+        <p class="help" data-i18n="detalle_help"></p>
+        <div id="lines"></div>
+        <p class="empty" id="lines-empty" data-i18n="lines_empty"></p>
+      </section>
+
+      <!-- Result -->
+      <section class="card" id="card-resultado" hidden>
+        <h2><span class="step"></span><span data-i18n="h_resultado"></span></h2>
+        <div class="fld"><span data-i18n="f_estado"></span>
+          <div class="seg estado" id="f-estado" role="radiogroup"></div>
+        </div>
+        <p class="warn-box" id="critical-warn" hidden></p>
+        <label class="fld downtime" id="downtime-fld"><span><span data-i18n="f_downtime"></span> <small data-i18n="opcional"></small></span>
+          <input id="f-downtime" inputmode="decimal" autocomplete="off" data-i18n-ph="ph_downtime">
+        </label>
+        <div class="vfield" data-field="observaciones" data-label-key="f_obs">
+          <label for="f-obs" data-i18n="f_obs"></label>
+          <div class="vrow"><textarea id="f-obs" rows="2" data-i18n-ph="ph_obs"></textarea></div>
+        </div>
+      </section>
+
+      <div class="footer-bar" id="footer">
+        <p class="errors" id="confirm-errors" hidden></p>
+        <span class="draft-state" id="draft-state"></span>
+        <button type="button" id="btn-next" class="next" hidden></button>
+        <button type="button" id="btn-discard" class="ghost" data-i18n="btn_discard"></button>
+        <button type="button" class="primary" id="btn-confirm" data-i18n="btn_confirm"></button>
+      </div>
+     </div>
+
+      <div id="done" class="card done" hidden>
+        <h2 data-i18n="done_title"></h2>
+        <p class="states" id="done-states"></p>
+        <p id="done-summary"></p>
+        <div class="actions">
+          <button type="button" id="btn-open-excel-done" data-i18n="btn_open_excel"></button>
+          <button type="button" class="primary" id="btn-new" data-i18n="btn_new"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= History ================= -->
+    <section id="view-history" class="view" hidden>
+      <div class="card">
+        <div class="row-between">
+          <h2 data-i18n="h_history"></h2>
+          <div class="actions">
+            <button type="button" id="btn-open-excel" data-i18n="btn_open_excel"></button>
+            <a class="button" href="/api/excel/descargar" data-i18n="btn_download_excel"></a>
+          </div>
+        </div>
+        <p class="help" id="excel-path"></p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th data-i18n="th_fecha"></th><th data-i18n="th_equipo"></th><th data-i18n="th_actividad"></th><th data-i18n="th_tecnico"></th>
+              <th data-i18n="th_horometro"></th><th data-i18n="th_items"></th><th data-i18n="th_defectos"></th><th data-i18n="th_estado_equipo"></th><th data-i18n="th_registro"></th></tr></thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- microphone setup / test -->
+  <dialog id="mic-dialog">
+    <form method="dialog" class="dialog-body">
+      <h2 data-i18n="mic_title"></h2>
+      <label class="fld"><span data-i18n="mic_device"></span>
+        <select id="mic-device"><option value="" data-i18n="mic_default"></option></select>
+      </label>
+      <div class="meter"><i id="mic-meter"></i></div>
+      <p class="help" id="mic-help" data-i18n="mic_help"></p>
+      <button type="button" id="mic-test" data-i18n="mic_test"></button>
+      <p class="test-result" id="mic-test-result"></p>
+      <div class="actions end"><button class="primary" value="close" data-i18n="mic_ok"></button></div>
+    </form>
+  </dialog>
+
+  <template id="line-template">
+    <article class="line" data-state="sin_registrar">
+      <header>
+        <span class="line-no"></span>
+        <select class="line-comp" data-i18n-aria="topup_comp"></select>
+        <div class="seg result" role="radiogroup"></div>
+        <button type="button" class="small ghost line-toggle"></button>
+        <button type="button" class="small ghost line-del" data-i18n-title="line_remove">✕</button>
+      </header>
+      <div class="line-body">
+        <div class="vfield" data-field="hallazgo" data-label-key="f_hallazgo">
+          <label data-i18n="f_hallazgo"></label>
+          <div class="vrow"><textarea rows="2"></textarea></div>
+        </div>
+        <div class="vfield" data-field="accion_realizada" data-label-key="f_accion_realizada">
+          <label data-i18n="f_accion_realizada"></label>
+          <div class="vrow"><textarea rows="2" data-i18n-ph="ph_accion_realizada"></textarea></div>
+        </div>
+        <div class="vfield" data-field="accion_recomendada" data-label-key="f_accion_recomendada">
+          <label data-i18n="f_accion_recomendada"></label>
+          <div class="vrow"><textarea rows="1"></textarea></div>
+        </div>
+        <div class="topups"></div>
+      </div>
+      <p class="row-warn" hidden></p>
+    </article>
+  </template>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 10h2v4H3zm4-3h2v10H7zm4-4h2v18h-2zm4 4h2v10h-2zm4 3h2v4h-2z"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="M9 2h6a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V3a1 1 0 0 1 1-1Zm1 2v1h4V4h-4Zm-.7 12.3 6.4-6.4-1.4-1.4-5 5-2-2-1.4 1.4 3.4 3.4Z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><path d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V2Zm12 8H5v10h14V10Zm-9 2h4v4h-4v-4Z"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M21.7 6.3 18 10l-4-4 3.7-3.7A6 6 0 0 0 10.3 10L2.6 17.7a2 2 0 0 0 2.8 2.8l7.7-7.7a6 6 0 0 0 8.6-6.5Z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M13.6 2l.5 2.6c.6.2 1.2.5 1.7.9l2.5-.9 1.6 2.8-2 1.8c.1.6.1 1.2 0 1.8l2 1.8-1.6 2.8-2.5-.9c-.5.4-1.1.7-1.7.9l-.5 2.6h-3.2l-.5-2.6c-.6-.2-1.2-.5-1.7-.9l-2.5.9-1.6-2.8 2-1.8a5.6 5.6 0 0 1 0-1.8l-2-1.8 1.6-2.8 2.5.9c.5-.4 1.1-.7 1.7-.9l.5-2.6h3.2ZM12 8.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></symbol>
+  </svg>
+
+  <script src="/static/i18n.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

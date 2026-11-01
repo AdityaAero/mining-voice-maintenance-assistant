@@ -1,0 +1,5 @@
+# Tests: real headless Microsoft Edge (then run: python -m playwright install msedge, if Edge is missing)
+playwright==1.64.1
+# Regenerating the spoken test clips (tests/make_samples.py, needs internet once)
+edge-tts==7.3.1
+av==19.0.2

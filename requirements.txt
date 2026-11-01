@@ -1,0 +1,13 @@
+# App (tested with Python 3.14 on Windows 11)
+fastapi==0.162.0
+uvicorn==0.54.0
+numpy==2.5.4
+openpyxl==3.1.5
+faster-whisper==1.2.1
+ctranslate2==4.8.4
+huggingface_hub==2.4.0
+
+# One-time download and int8 conversion of openai/whisper-large-v3 (download_model.py),
+# and the optional "transformers" engine. Install torch from the CPU index:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+transformers==5.22.1

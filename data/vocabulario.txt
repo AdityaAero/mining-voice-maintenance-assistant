@@ -1,0 +1,23 @@
+# Vocabulario técnico que se entrega a Whisper como contexto (un término por línea).
+# Agregue nombres de componentes, apodos del taller y códigos que el modelo escriba mal.
+# Mantenga la lista corta y real: términos inventados pueden sesgar la transcripción.
+Cargador CAT 994K
+mantención
+manguera de levante
+cilindro de levante
+cilindro de volteo
+convertidor de par
+embrague del impulsor
+transmisión
+mando final
+diferencial
+balde
+dientes y adaptadores
+calzas y porta calzas
+canilleras y entredientes
+sello Duo-Cone
+VIMS
+AFEX
+horómetro
+lubricación automática
+relleno de aceite

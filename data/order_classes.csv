@@ -1,0 +1,9 @@
+clase_orden,descripcion,actividad_sugerida,fuente
+Z001,Mantenimiento preventivo (pauta PM),mantenimiento_preventivo,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
+Z002,Cambio mayor de componente por horas,reparacion_mayor,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
+Z003,Mantenimiento correctivo,mantenimiento_correctivo,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
+Z005,Misceláneos / administrativo,,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
+Z007,Correctivo por aviso,,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
+Z009,Cambio programado de GET / desgaste de balde,,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
+Z010,Servicios auxiliares (sistema contra incendios / lavado / pintura),,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
+Z012,Reparación en taller / garantía,,Ejemplo inferido del contenido de órdenes de mantenimiento; ajústelo a su configuración SAP (no es la etiqueta oficial T003O)
